@@ -40,3 +40,20 @@ values
  (8,
  'aced0005737200226f72672e737072696e676672616d65776f726b2e646174612e67656f2e506f696e7431b9e90ef11a4006020002440001784400017978704023000000000000404bfa1cac083127', now(), now(), false, 'ONLINE',
 'driver08pw', 'driver08');
+
+-- Create 1 Electric Cars
+insert into car (car_id, date_created, deleted, license_plate, seat_count, engine_type, manufacturer, car_status) values (1, now(), false, 'HHK7431', 4, 'ELECTRIC', 'OPEL', 'UNMAP');
+
+-- Create 1 Gas Cars
+insert into car (car_id, date_created, deleted, license_plate, seat_count, engine_type, manufacturer, car_status) values (2, now(), false, 'BP26571', 5, 'GAS', 'AUDI', 'UNMAP');
+
+-- Create 2 Mapped Cars
+insert into car (car_id, date_created, deleted, license_plate, seat_count, engine_type, manufacturer, car_status) values (3, now(), false, 'BAE2549', 5, 'DIESEL', 'AUDI', 'MAP');
+
+insert into car (car_id, date_created, deleted, license_plate, seat_count, engine_type, manufacturer, car_status) values (4, now(), false, 'WOBV6097', 5, 'GAS', 'PORSCHE', 'MAP');
+
+-- Create 2 UnMapped Cars 
+
+insert into car (car_id, date_created, deleted, license_plate, seat_count, engine_type, manufacturer, car_status) values (5, now(), false, 'Y127508', 6, 'ELECTRIC', 'FORD', 'UNMAP');
+
+insert into car (car_id, date_created, deleted, license_plate, seat_count, engine_type, manufacturer, car_status) values (6, now(), false, 'WWGG544', 4, 'DIESEL', 'OPEL', 'UNMAP');

@@ -21,6 +21,10 @@ public class DriverMapper
             .setId(driverDO.getId())
             .setPassword(driverDO.getPassword())
             .setUsername(driverDO.getUsername());
+        
+        if(driverDO.getCarDO()!=null){
+        	driverDTOBuilder.setCarDTO(CarMapper.makeCarDTO(driverDO.getCarDO()));
+        }
 
         GeoCoordinate coordinate = driverDO.getCoordinate();
         if (coordinate != null)

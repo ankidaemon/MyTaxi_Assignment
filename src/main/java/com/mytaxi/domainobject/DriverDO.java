@@ -1,8 +1,8 @@
 package com.mytaxi.domainobject;
 
-import com.mytaxi.domainvalue.GeoCoordinate;
-import com.mytaxi.domainvalue.OnlineStatus;
 import java.time.ZonedDateTime;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -10,10 +10,16 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.mytaxi.domainvalue.GeoCoordinate;
+import com.mytaxi.domainvalue.OnlineStatus;
 
 @Entity
 @Table(
@@ -52,14 +58,18 @@ public class DriverDO
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OnlineStatus onlineStatus;
+    
+    //Added Car Mapping here
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="car_id")
+    private CarDO carDO;
 
 
     private DriverDO()
     {
     }
 
-
-    public DriverDO(String username, String password)
+	public DriverDO(String username, String password)
     {
         this.username = username;
         this.password = password;
@@ -129,5 +139,15 @@ public class DriverDO
         this.coordinate = coordinate;
         this.dateCoordinateUpdated = ZonedDateTime.now();
     }
+    
+
+    public CarDO getCarDO() {
+		return carDO;
+	}
+
+
+	public void setCarDO(CarDO carDO) {
+		this.carDO = carDO;
+	}
 
 }
