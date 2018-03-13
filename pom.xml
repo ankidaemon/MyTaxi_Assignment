@@ -91,7 +91,13 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${io.springfox.springfox-swagger-ui}</version>
         </dependency>
-
+        
+        <!-- Spring Security for securing the API -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		
     </dependencies>
 
     <build>
