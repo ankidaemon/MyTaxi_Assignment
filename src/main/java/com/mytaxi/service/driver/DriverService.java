@@ -27,4 +27,6 @@ public interface DriverService
 
 	DriverDO unMapCar(DriverDO driverDO, CarDO carDO) throws ProhibitedOperationException;
 
+	DriverDO findByCar(Long carID);
+
 }

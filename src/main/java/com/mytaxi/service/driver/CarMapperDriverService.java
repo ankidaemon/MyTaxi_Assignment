@@ -48,6 +48,7 @@ public class CarMapperDriverService extends DefaultDriverService {
      *
      * @param driverDO
      * @param carDO
+     * @return driverDO
 	 * @throws ProhibitedOperationException 
      */
 	@Override
@@ -63,4 +64,15 @@ public class CarMapperDriverService extends DefaultDriverService {
 		return driverDO;
 	}
 
+	/**
+     * Find drivers by car ID.
+     *
+     * @param carID
+     * @return driverDO
+     */
+	@Override
+	public DriverDO findByCar(Long carID) {
+		// TODO Auto-generated method stub
+		return driverRepository.findByAndCarDO_Id(carID);
+	}
 }

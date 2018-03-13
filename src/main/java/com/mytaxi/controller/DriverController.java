@@ -1,10 +1,16 @@
 package com.mytaxi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +38,7 @@ import com.mytaxi.exception.EntityNotFoundException;
 import com.mytaxi.exception.ProhibitedOperationException;
 import com.mytaxi.service.car.CarService;
 import com.mytaxi.service.driver.DriverService;
+import com.mytaxi.specification.CarSpecificationBuilder;
 
 /**
  * All operations with a driver will be routed by this controller.
@@ -106,5 +114,31 @@ public class DriverController
 		return new ResponseEntity<>(DriverMapper.makeDriverDTO(driverDO),HttpStatus.ACCEPTED);
     }
     
-   
+    //Driver based on car Attributes
+    @GetMapping("/cars")
+    @ResponseBody
+    public Set<DriverDTO> findDriversByCar(@RequestParam(value = "search", required = false) String search)
+        throws ConstraintsViolationException, EntityNotFoundException
+    {
+    	CarSpecificationBuilder builder = new CarSpecificationBuilder();
+    	List<DriverDTO> driverDTOList = new ArrayList<>();
+        if (search != null) {
+            Pattern pattern = Pattern.compile("(\\w+?)(=|<|>)(\\w+?),");
+            Matcher matcher = pattern.matcher(search + ",");
+            while (matcher.find()) {
+                builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
+            }
+            Specification<CarDO> spec= builder.build();
+            List<CarDO> carDOList = carService.findAll(spec);
+            
+            for(CarDO carDO : carDOList){
+            	DriverDO driverDO = driverService.findByCar(carDO.getId());
+	            	if(driverDO != null){
+	            		driverDTOList.add(DriverMapper.makeDriverDTO(driverDO));
+	            	}
+            }
+        }
+        
+        return new TreeSet<>(driverDTOList);
+    }
 }

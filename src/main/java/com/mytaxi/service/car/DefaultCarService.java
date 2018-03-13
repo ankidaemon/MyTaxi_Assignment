@@ -7,6 +7,7 @@ import javax.validation.ConstraintViolationException;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,7 +54,7 @@ public class DefaultCarService implements CarService
      * Creates a new car.
      *
      * @param carDO
-     * @return
+     * @return created car
      * @throws ConstraintsViolationException if a car already exists with the given licensePlate, ... .
      */
     @Override
@@ -89,9 +90,10 @@ public class DefaultCarService implements CarService
 
 
     /**
-     * Find all cars by their state.
+     * Find all cars by their status.
      *
      * @param carStatus
+     * @return list of cars based on their status
      */
     @Override
     public List<CarDO> find(CarStatus carStatus)
@@ -123,6 +125,17 @@ public class DefaultCarService implements CarService
 		CarDO carDO=findCarChecked(carId);
 		//Rating can be a class having methods to find average rating based on no of people rated.
 		carDO.setRating(rating);
+	}
+
+	/**
+     * Find All cars based on specification
+     *
+     * @param carSpecification
+     * @return list of cars based on car specification
+     */
+	@Override
+	public List<CarDO> findAll(Specification<CarDO> spec) {
+		return carRepository.findAll(spec);
 	}
 
 }

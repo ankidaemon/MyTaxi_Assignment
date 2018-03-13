@@ -7,7 +7,7 @@ import com.mytaxi.domainvalue.GeoCoordinate;
 import javax.validation.constraints.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DriverDTO
+public class DriverDTO implements Comparable<DriverDTO>
 {
     @JsonIgnore
     private Long id;
@@ -20,8 +20,6 @@ public class DriverDTO
 
     private GeoCoordinate coordinate;
 
-    private CarDTO carDTO;
-    
     private DriverDTO()
     {
     }
@@ -33,7 +31,6 @@ public class DriverDTO
         this.username = username;
         this.password = password;
         this.coordinate = coordinate;
-        this.carDTO = carDTO;
     }
 
 
@@ -116,4 +113,15 @@ public class DriverDTO
         }
 
     }
+
+    @Override
+    public int compareTo(DriverDTO o) {
+		// TODO Auto-generated method stub
+		if(this.id==o.id)
+			return 0;
+		else if(this.id<o.id)
+			return -1;
+		else
+			return 1;
+	}
 }
