@@ -60,7 +60,7 @@ public class DriverDO
     private OnlineStatus onlineStatus;
     
     //Added Car Mapping here
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name="car_id")
     private CarDO carDO;
 
